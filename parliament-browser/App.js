@@ -10,7 +10,9 @@ export default function App() {
 
   const getPersons = async () => {
     try {
-      const response = await fetch("https://api.lagtinget.ax/api/persons.json");
+      const response = await fetch(
+        "https://api.lagtinget.ax/api/persons.json?state=1",
+      );
       const json = await response.json();
       setData(json);
     } catch (error) {
