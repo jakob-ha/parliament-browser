@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList } from "react-native";
+import { ListItem, Avatar } from "@rneui/base";
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
@@ -26,10 +27,14 @@ export default function App() {
     getPersons();
   }, []);
 
+  const printData = ({ item }) => {
+    return <Text>item.name</Text>;
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>{data[0].name}</Text>
         <View style={styles.container}>
           {isLoading ? (
             <ActivityIndicator />
@@ -38,14 +43,23 @@ export default function App() {
               data={data}
               keyExtractor={({ id }) => id}
               renderItem={({ item }) => (
-                <Text>
-                  {item.name}, {item.address}
-                </Text>
+                <ListItem bottomDivider>
+                  <Avatar
+                    source={{
+                      uri: "https://api.lagtinget.ax/sites/api.lagtinget.ax/files/LT23%20Anders%20Holmberg%2010.jpg",
+                    }}
+                  />
+                  <ListItem.Content>
+                    <ListItem.Title>{item.name}</ListItem.Title>
+                    <ListItem.Subtitle>{item.name}</ListItem.Subtitle>
+                  </ListItem.Content>
+                  <ListItem.Chevron />
+                </ListItem>
               )}
             />
           )}
         </View>
-        <Text>Open up App.js to start working on your aapp!</Text>
+        <Text>{data[0].name}</Text>
       </SafeAreaView>
     </SafeAreaProvider>
   );
