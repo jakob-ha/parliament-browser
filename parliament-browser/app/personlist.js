@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 import { ListItem, Avatar } from "@rneui/base";
 
-export default function App() {
+export default function PersonList() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState("");
