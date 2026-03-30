@@ -29,9 +29,14 @@ export default function App() {
   }, []);
 
   const PersonCard = ({ person }) => (
-    <View>
-      <Text> {person.name}</Text>
-    </View>
+    <>
+      <ListItem bottomDivider style={styles.personcard} size="lg">
+        <ListItem.Content>
+          <ListItem.Title>{person.name}</ListItem.Title>
+          <ListItem.Subtitle>{person.name}</ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
+    </>
   );
 
   const renderItem = ({ item }) => <PersonCard person={item} />;
@@ -59,7 +64,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffffff",
-    alignItems: "center",
-    justifyContent: "center",
+  },
+  personcard: {
+    height: 60,
+    borderColor: "#74b1be",
+    backgroundColor: "#2f3241",
+    borderWidth: 2,
+    margin: 8,
   },
 });
