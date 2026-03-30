@@ -1,5 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList } from "react-native";
@@ -8,6 +14,24 @@ import { ListItem, Avatar } from "@rneui/base";
 export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [order, setOrder] = useState("DESC");
+
+  const toggleOrder = () => {
+    const newOrder = order === "ASC" ? "DESC" : "ASC";
+    setOrder(newOrder);
+  };
+
+  const personListFiltered = data.filter((person) =>
+    person.name.toLowerCase().includes(keyword.toLowerCase()),
+  );
+
+  const postListSorted = personListFiltered.sort((a, b) => {
+    if (order === "ASC") {
+      return a.name.localeCompare(b.name);
+    }
+    return b.name.localeCompare(a.name);
+  });
 
   const getPersons = async () => {
     try {
@@ -28,20 +52,36 @@ export default function App() {
     getPersons();
   }, []);
 
-  const PersonCard = ({ person }) => (
-    <>
-      <ListItem bottomDivider style={styles.personcard}>
-        <Avatar
-          rounded
-          source={person.image ? { uri: person.image.url } : null}
-          title={person.name}
+  const renderPersonListHeader = () => {
+    return (
+      <>
+        <TextInput
+          value={keyword}
+          onChangeText={setKeyword}
+          style={styles.input}
         />
-        <ListItem.Content>
-          <ListItem.Title>{person.name}</ListItem.Title>
-          <ListItem.Subtitle>{person.birthday}</ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
-    </>
+
+        <TouchableOpacity style={styles.sortButton} onPress={toggleOrder}>
+          <Text>
+            Order: {order} - Total: {postListSorted.length}
+          </Text>
+        </TouchableOpacity>
+      </>
+    );
+  };
+
+  const PersonCard = ({ person }) => (
+    <ListItem bottomDivider style={styles.personcard}>
+      <Avatar
+        rounded
+        source={person.image ? { uri: person.image.url } : null}
+        title={person.name}
+      />
+      <ListItem.Content>
+        <ListItem.Title>{person.name}</ListItem.Title>
+        <ListItem.Subtitle>{person.birthday}</ListItem.Subtitle>
+      </ListItem.Content>
+    </ListItem>
   );
 
   const renderItem = ({ item }) => <PersonCard person={item} />;
@@ -54,8 +94,9 @@ export default function App() {
             <ActivityIndicator />
           ) : (
             <FlatList
-              data={data}
+              data={postListSorted}
               keyExtractor={(item) => item.id.toString()}
+              ListHeaderComponent={renderPersonListHeader()}
               renderItem={renderItem}
             />
           )}
@@ -76,5 +117,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#2f3241",
     borderWidth: 2,
     margin: 8,
+  },
+  input: {
+    backgroundColor: "#fff",
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
   },
 });
