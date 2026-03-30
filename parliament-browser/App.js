@@ -15,6 +15,7 @@ export default function App() {
         "https://api.lagtinget.ax/api/persons.json?state=1",
       );
       const json = await response.json();
+
       setData(json);
     } catch (error) {
       console.error(error);
@@ -27,39 +28,28 @@ export default function App() {
     getPersons();
   }, []);
 
-  const printData = ({ item }) => {
-    return <Text>item.name</Text>;
-  };
+  const PersonCard = ({ person }) => (
+    <View>
+      <Text> {person.name}</Text>
+    </View>
+  );
+
+  const renderItem = ({ item }) => <PersonCard person={item} />;
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <Text>{data[0].name}</Text>
         <View style={styles.container}>
           {isLoading ? (
             <ActivityIndicator />
           ) : (
             <FlatList
               data={data}
-              keyExtractor={({ id }) => id}
-              renderItem={({ item }) => (
-                <ListItem bottomDivider>
-                  <Avatar
-                    source={{
-                      uri: "https://api.lagtinget.ax/sites/api.lagtinget.ax/files/LT23%20Anders%20Holmberg%2010.jpg",
-                    }}
-                  />
-                  <ListItem.Content>
-                    <ListItem.Title>{item.name}</ListItem.Title>
-                    <ListItem.Subtitle>{item.name}</ListItem.Subtitle>
-                  </ListItem.Content>
-                  <ListItem.Chevron />
-                </ListItem>
-              )}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={renderItem}
             />
           )}
         </View>
-        <Text>{data[0].name}</Text>
       </SafeAreaView>
     </SafeAreaProvider>
   );
