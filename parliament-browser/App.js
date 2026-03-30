@@ -30,10 +30,15 @@ export default function App() {
 
   const PersonCard = ({ person }) => (
     <>
-      <ListItem bottomDivider style={styles.personcard} size="lg">
+      <ListItem bottomDivider style={styles.personcard}>
+        <Avatar
+          rounded
+          source={person.image ? { uri: person.image.url } : null}
+          title={person.name}
+        />
         <ListItem.Content>
           <ListItem.Title>{person.name}</ListItem.Title>
-          <ListItem.Subtitle>{person.name}</ListItem.Subtitle>
+          <ListItem.Subtitle>{person.birthday}</ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
     </>
