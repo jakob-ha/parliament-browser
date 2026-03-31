@@ -28,13 +28,4 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     fontSize: 20,
   },
-  fixToText: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
 });
