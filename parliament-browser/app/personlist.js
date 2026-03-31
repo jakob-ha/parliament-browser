@@ -1,15 +1,16 @@
-import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
+  FlatList,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList } from "react-native";
 import { ListItem, Avatar } from "@rneui/base";
+import { Link } from "expo-router";
 
 export default function PersonList() {
   const [isLoading, setLoading] = useState(true);
@@ -71,17 +72,23 @@ export default function PersonList() {
   };
 
   const PersonCard = ({ person }) => (
-    <ListItem bottomDivider style={styles.personcard}>
-      <Avatar
-        rounded
-        source={person.image ? { uri: person.image.url } : null}
-        title={person.name}
-      />
-      <ListItem.Content>
-        <ListItem.Title>{person.name}</ListItem.Title>
-        <ListItem.Subtitle>{person.birthday}</ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
+    <Link
+      href={{ pathname: "/personinfo", params: { id: person.id } }}
+      push
+      asChild
+    >
+      <ListItem bottomDivider style={styles.personcard}>
+        <Avatar
+          rounded
+          source={person.image ? { uri: person.image.url } : null}
+          title={person.name}
+        />
+        <ListItem.Content>
+          <ListItem.Title>{person.name}</ListItem.Title>
+          <ListItem.Subtitle>{person.birthday}</ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
+    </Link>
   );
 
   const renderItem = ({ item }) => <PersonCard person={item} />;
