@@ -16,7 +16,7 @@ export default function PersonList() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState("");
-  const [order, setOrder] = useState("DESC");
+  const [order, setOrder] = useState("ASC");
 
   const toggleOrder = () => {
     const newOrder = order === "ASC" ? "DESC" : "ASC";
