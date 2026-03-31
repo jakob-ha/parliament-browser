@@ -8,7 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ListItem, Avatar } from "@rneui/base";
 import { Link } from "expo-router";
 
@@ -60,6 +60,7 @@ export default function PersonList() {
           value={keyword}
           onChangeText={setKeyword}
           style={styles.input}
+          placeholder="Search by name"
         />
 
         <TouchableOpacity style={styles.sortButton} onPress={toggleOrder}>
@@ -126,9 +127,18 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: "#dfffffff",
     padding: 10,
     margin: 10,
     borderRadius: 5,
+  },
+  sortButton: {
+    backgroundColor: "#d2d2d2",
+    padding: 10,
+    borderRadius: 5,
+    borderBottomColor: "#ddd",
+    borderBottomWidth: 1,
+    alignItems: "flex-end",
+    marginHorizontal: 10,
   },
 });
